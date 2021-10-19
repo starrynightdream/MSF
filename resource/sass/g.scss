@@ -1,0 +1,56 @@
+@import url('./pc.css') all and (min-width: 900px);
+@import url('./phone.css') all and (max-width: 899px);
+    
+body {
+    $colorHas : skyblue;
+    $colorNone : white;
+    $colorFix : gray;
+
+    background-color: $colorFix;
+
+    .system_info_class {
+        transition: all .5s ease;
+        z-index: 1;
+        position: absolute;
+        top: 10vh;
+        width: 20vw;
+        left: 40vw;
+
+        background-color: $colorFix;
+
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+    }
+
+    .system_context_class,.system_setting_class {
+        transition: all .5s ease;
+
+        position: absolute;
+        top: 0px;
+        height: 100vh;
+        border: none;
+
+        /* 记录自己一个失误，这里要有&才会变化成功，因为这里需要同级选择而非后代选择*/
+        &.before {
+            width: 0vw;
+        }
+
+        &.after {
+            width: 50vw;
+        }
+    }
+
+    .system_setting_class {
+
+        left: 0px;
+        background-color: $colorHas;
+
+    }
+
+    .system_context_class {
+        right: 0px;
+        background-color: $colorNone;
+
+    }
+}
