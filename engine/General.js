@@ -12,6 +12,9 @@ let settingD
 let infoD 
 let contextD
 
+let settingControl
+let infoControl
+let contextControl
 
 export default {
     createMain(){
@@ -19,7 +22,15 @@ export default {
         infoD = document.getElementById(InfoID)
         contextD = document.getElementById(ContextID)
 
-        infoD.innerHTML = infoPage.context("test");
+        infoControl = infoPage.context(infoD, {
+            infos:'hello world in manager system'.split(' ')
+        });
+
+        setTimeout(() => {
+            infoControl.cData({
+                infos : `change data there`.split(' ')
+            })
+        }, 1000);
 
         infoD.classList.add("before")
         settingD.classList.add("before")
