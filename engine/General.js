@@ -1,5 +1,7 @@
 // General.js
 // 页面生成主方法
+
+// todo 由设定导入需要使用的页面
 // import settingPage from "../component/settingPage.js"
 import infoPage from "../component/infoPage.js"
 // import contextPage from "../component/contextPage.js"
