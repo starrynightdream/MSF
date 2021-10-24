@@ -44,17 +44,17 @@ export default {
         root.appendChild(_r);
         root.classList.add(this.css_class);
 
-        System.reflesh.addEve(root, 'onmouseover', (e, conters) =>{
-            conters[settingPage.defaultComponentName]._root.classList.add('pull_left');
+        System.reflesh.addEve(root, 'mouseover', (e, conters) =>{
+            conters[settingPage.defaultComponentName]._fatherNode.classList.add('pull_left');
         });
 
-        System.reflesh.addEve(root, 'onmouseout', (e, conters) =>{
-            conters[settingPage.defaultComponentName]._root.classList.remove('pull_left');
+        System.reflesh.addEve(root, 'mouseout', (e, conters) =>{
+            conters[settingPage.defaultComponentName]._fatherNode.classList.remove('pull_left');
         });
 
         return {
             _name: name?name : this.defaultComponentName,
-            _root: root,
+            _fatherNode: root,
             _cRoot: _render_root,
             cData (data) {
                 this._cRoot.innerHTML = ''

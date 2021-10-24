@@ -45,6 +45,7 @@ export default {
         return {
             _name: name? name: this.defaultComponentName,
             _cRoot: _render_root,
+            _fatherNode: root,
             cData (data) {
                 this._cRoot.innerHTML = ''
                 let _items = data.infos.map(item);

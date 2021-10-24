@@ -62,14 +62,13 @@ const _pageChange = {
     },
     registerConterol (...conterols) {
 
-        for (let con in conterols) {
+        for (let con of conterols) {
             this._conterol[con._name] = con;
         }
     },
     addEve (root,e_type, callback) {
-        // todo: event callback no work
-        root.addEventListener(e_type, function(e) {
-            callback(e, _conterol);
+        root.addEventListener(e_type,(e)=> {
+            callback(e, this._conterol);
         });
     },
     toPage(pname) {
