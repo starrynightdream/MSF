@@ -34,6 +34,26 @@ function item(data, idx, arr) {
     return _item;
 }
 
+function mouseover(e) {
+    let conters = System.reflesh.conterols;
+    conters[settingPage.defaultComponentName]._fatherNode.classList.add('pull_left');
+}
+
+function mouseout (e) {
+    let conters = System.reflesh.conterols;
+    conters[settingPage.defaultComponentName]._fatherNode.classList.remove('pull_left');
+}
+
+function addListener(root){
+    System.reflesh.addEve(root, 'mouseover', mouseover);
+    System.reflesh.addEve(root, 'mouseout', mouseout);
+}
+
+function removeListener(root) {
+    System.reflesh.removeEve(root, 'mouseover', mouseover);
+    System.reflesh.removeEve(root, 'mouseout', mouseout);
+}
+
 export default {
     defaultComponentName: 'contextPage',
     css: [],
@@ -44,13 +64,7 @@ export default {
         root.appendChild(_r);
         root.classList.add(this.css_class);
 
-        System.reflesh.addEve(root, 'mouseover', (e, conters) =>{
-            conters[settingPage.defaultComponentName]._fatherNode.classList.add('pull_left');
-        });
-
-        System.reflesh.addEve(root, 'mouseout', (e, conters) =>{
-            conters[settingPage.defaultComponentName]._fatherNode.classList.remove('pull_left');
-        });
+        addListener(root);
 
         return {
             _name: name?name : this.defaultComponentName,

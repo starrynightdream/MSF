@@ -66,10 +66,16 @@ const _pageChange = {
             this._conterol[con._name] = con;
         }
     },
+    get conterols() {
+        return this._conterol;
+    },
+    // todo: make auto mount eve call and disable eve call
     addEve (root,e_type, callback) {
-        root.addEventListener(e_type,(e)=> {
-            callback(e, this._conterol);
-        });
+        root.addEventListener(e_type, callback);
+    },
+    removeEve (root,e_type, callback) {
+        // bug: this func is temp, can't remove
+        root.removeEventListener(e_type, callback);
     },
     toPage(pname) {
         let _isinner = false;
