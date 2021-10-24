@@ -54,14 +54,34 @@ const _pageChange = {
 
         return this;
     },
-    pageClass(...nodes) {
+    mountPageClass(...nodes) {
 
         nodes.forEach(item => {
             this._nodeArr.push(item);
         });
     },
+    registerConterol (...conterols) {
+
+        for (let con in conterols) {
+            this._conterol[con._name] = con;
+        }
+    },
+    addEve (root,e_type, callback) {
+        // todo: event callback no work
+        root.addEventListener(e_type, function(e) {
+            callback(e, _conterol);
+        });
+    },
     toPage(pname) {
-        if (!(pname in pageState.pages)) {
+        let _isinner = false;
+        for (let _n in pageState.pages) {
+            if (pname == _n) {
+                _isinner = true;
+                break;
+            }
+        }
+
+        if (_isinner) {
             throw "目标页面不存在"
         }
 
@@ -81,15 +101,37 @@ const _pageChange = {
         });
         _SYSG.pageClass = pageState.states[pname].class;
 
+        let enter = (time)=> {
+            this._nodeArr.forEach( node =>{
+                node.classList.remove('keep');
+                node.classList.add('enter');
+            });
+            setTimeout(() => {
+                keep();
+            }, time);
+        }
+
+        let keep = () =>{
+            this._nodeArr.forEach( node =>{
+                node.classList.remove('enter');
+                node.classList.add('keep');
+            });
+        }
+
+        setTimeout(() => {
+            enter(500);
+        }, 0);
+
         // global attr change
         let _o = pageState.states[pname].state
         for(let key of Object.keys(_o)) {
             this.setVal(key, _o[key])
         }
     },
-    _coverO = {},
-    _nodeArr = [],
-    _fArr = {},
+    _coverO : {},
+    _nodeArr : [],
+    _fArr : {},
+    _conterol : {},
     _bindAKey(key, f, keys) {
 
         if (!this._coverO[key]) {
@@ -168,7 +210,6 @@ function history(idx = 0) {
 
 export default {
     history,
-    toPage: _pageChange.toPage,
     G,
     reflesh: _pageChange,
     _SYSG,

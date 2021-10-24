@@ -1,0 +1,76 @@
+.col {
+    $perCol :8vw;
+    $perSpace: (100 - $perCol * 12) / 24;
+
+    &-1 {
+        width: $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-2 {
+        width: 2 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-3 {
+        width: 3 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-4 {
+        width: 4 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-5 {
+        width: 5 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-6 {
+        width: 6 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-7 {
+        width: 7 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-8 {
+        width: 8 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-9 {
+        width: 9 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-10 {
+        width: 10 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-11 {
+        width: 11 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+
+    &-12 {
+        width: 12 * $perCol;
+        border: 0 $perSpace 0 $perSpace;
+    }
+}
+
+.contain {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    /* 主轴方向及是否换行两个属性的简写 */
+    justify-content: center;
+    /* 项目在主轴上的对齐方向 */
+    align-items: left;
+    /* 项目在副轴上的对齐方式 */
+}

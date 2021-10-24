@@ -6,6 +6,9 @@ body {
     $colorNone : white;
     $colorFix : gray;
 
+    $halfWidth : 50vw;
+    $pullSome : 2vw;
+
     background-color: $colorFix;
 
     .system_info_class {
@@ -27,19 +30,16 @@ body {
     }
 
     .system_context_class,.system_setting_class {
-        transition: all .5s ease;
+        transition: width .5s ease;
 
         position: absolute;
         top: 0px;
         height: 100vh;
         border: none;
+        width: 0vw;
 
         /* 记录自己一个失误，这里要有&才会变化成功，因为这里需要同级选择而非后代选择*/
-        &.before {
-            width: 0vw;
-        }
-
-        &.after {
+        &.enter {
             width: 50vw;
         }
     }
@@ -48,6 +48,17 @@ body {
 
         left: 0px;
         background-color: $colorHas;
+        &.keep {
+            width: 50vw;
+        }
+
+        &:hover {
+            width: $halfWidth + $pullSome;
+        }
+
+        &.pull_left{
+            width: $halfWidth - $pullSome;
+        }
 
     }
 
@@ -55,5 +66,10 @@ body {
         right: 0px;
         background-color: $colorNone;
 
+        &.keep {
+            transition: none;
+            width: 100vw;
+            z-index: -1;
+        }
     }
 }

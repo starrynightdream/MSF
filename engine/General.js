@@ -2,9 +2,12 @@
 // 页面生成主方法
 
 // todo 由设定导入需要使用的页面
-// import settingPage from "../component/settingPage.js"
+import settingPage from "../component/settingPage.js"
 import infoPage from "../component/infoPage.js"
-// import contextPage from "../component/contextPage.js"
+import contextPage from "../component/contextPage.js"
+
+import System from "./System.js";
+import pageState from "../component/pageState.js";
 
 const SettingID = 'system_setting_page';
 const InfoID = 'system_info_page';
@@ -20,31 +23,51 @@ let contextControl
 
 export default {
     createMain(){
-        settingD = document.getElementById(SettingID)
-        infoD = document.getElementById(InfoID)
-        contextD = document.getElementById(ContextID)
+        settingD = document.getElementById(SettingID);
+        infoD = document.getElementById(InfoID);
+        contextD = document.getElementById(ContextID);
+        System.reflesh.mountPageClass(settingD, infoD, contextD);
 
+        settingControl = settingPage.context(settingD, {
+            infos: []
+        });
         infoControl = infoPage.context(infoD, {
             infos:'hello world in manager system'.split(' ')
         });
+        contextControl = contextPage.context(contextD, {
+            infos: []
+        });
+
+        System.reflesh.registerConterol(settingControl, infoControl, contextControl);
 
         setTimeout(() => {
             infoControl.cData({
                 infos : `change data there`.split(' ')
-            })
+            });
         }, 1000);
 
-        infoD.classList.add("before")
-        settingD.classList.add("before")
-        contextD.classList.add("before")
+        System.reflesh.toPage(pageState.pages[0]);
+        // setTimeout(() => {
+        //     this.trick()
+        // }, 0);
+
+        // infoD.classList.add("before")
+        // settingD.classList.add("before")
+        // contextD.classList.add("before")
     },
 
-    trick (){
-        infoD.classList.remove("before")
-        infoD.classList.add("after")
-        settingD.classList.remove("before")
-        settingD.classList.add("after")
-        contextD.classList.remove("before")
-        contextD.classList.add("after")
-    }
+    // change class need in system, general just create page
+    // trick (){
+    //     infoD.classList.remove("before")
+    //     infoD.classList.add("after")
+    //     settingD.classList.remove("before")
+    //     settingD.classList.add("after")
+    //     contextD.classList.remove("before")
+    //     contextD.classList.add("after")
+
+    //     setTimeout(() => {
+    //         contextD.classList.remove("after")
+    //         contextD.classList.add("keep")
+    //     }, 500);
+    // }
 }

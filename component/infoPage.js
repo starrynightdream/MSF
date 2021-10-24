@@ -1,10 +1,13 @@
 // infoPage.js
 // 介绍的小页面的内容获取
+import System from "../engine/System.js";
 
 function formPage(data) {
     let _r = document.createElement('div');
     let _render_root  = document.createElement('div');
     let _items = data.infos.map(item);
+
+    System.reflesh.mountPageClass(..._items);
 
     _r.appendChild(head(data));
     _items.forEach( (item) =>{
@@ -14,7 +17,6 @@ function formPage(data) {
     return {
         _r, _render_root
     }
-
 }
 
 function head(data) {
@@ -30,14 +32,17 @@ function item(data, idx, arr) {
 }
 
 export default {
+    defaultComponentName: 'infoPage',
     css: [],
     js: [],
-    css_class: ['system_info_class'],
-    context(root, data) {
+    css_class: ['system_info_class'], //这个css class会被加载在父节点上
+    context(root, data, name) {
         let {_r, _render_root} = formPage(data);
         root.appendChild(_r);
         root.classList.add(this.css_class);
+
         return {
+            _name: name? name: this.defaultComponentName,
             _cRoot: _render_root,
             cData (data) {
                 this._cRoot.innerHTML = ''
