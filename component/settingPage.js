@@ -3,6 +3,25 @@
 
 import System from "../engine/System.js";
 
+let _h5OnHomePage = {};
+
+function _onHomePage (){
+    // 进行全节点的渲染
+    if (!_h5OnHomePage.render) {
+        // 表示已经渲染过
+    }
+
+    // 执行动态数据的渲染结果
+    return {
+        _r, _render_root
+    };
+}
+
+/**
+ * 根据data响应信息
+ * @param {*} data 
+ * @returns 
+ */
 function formPage(data) {
     let _r = document.createElement('div');
     let _render_root  = document.createElement('div');
@@ -34,7 +53,6 @@ function item(data, idx, arr) {
 
 function addListener(root) {
     System.reflesh.bindEve(root, 'click', (e) =>{
-        alert('at home')
         System.reflesh.toPage('setting')
     }, 'home')
 }

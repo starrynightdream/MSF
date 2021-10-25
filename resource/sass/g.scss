@@ -29,12 +29,21 @@ body {
         justify-content: center; /* 项目在主轴上的对齐方向 */
         align-items: left; /* 项目在副轴上的对齐方式 */
         
-        &.enter {
-            top: 0vh;
+        &.homePage {
+            &.enter {
+                top: 0vh;
+            }
+
+            &.keep {
+                top: 15vh;
+            }
         }
 
-        &.keep {
-            top: 15vh;
+        &.settingPage {
+            &.keep {
+                top: 20vh;
+                left: 10vw;
+            }
         }
     }
 

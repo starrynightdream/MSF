@@ -45,14 +45,17 @@ function mouseout (e) {
 }
 
 function addListener(root){
-    System.reflesh.addEve(root, 'mouseover', mouseover);
-    System.reflesh.addEve(root, 'mouseout', mouseout);
+    // System.reflesh.addEve(root, 'mouseover', mouseover);
+    // System.reflesh.addEve(root, 'mouseout', mouseout);
+
+    System.reflesh.bindEve(root, 'mouseover', mouseover, 'home');
+    System.reflesh.bindEve(root, 'mouseout', mouseout, 'home');
 }
 
-function removeListener(root) {
-    System.reflesh.removeEve(root, 'mouseover', mouseover);
-    System.reflesh.removeEve(root, 'mouseout', mouseout);
-}
+// function removeListener(root) {
+//     System.reflesh.removeEve(root, 'mouseover', mouseover);
+//     System.reflesh.removeEve(root, 'mouseout', mouseout);
+// }
 
 export default {
     defaultComponentName: 'contextPage',
@@ -63,6 +66,8 @@ export default {
         let {_r, _render_root} = formPage(data);
         root.appendChild(_r);
         root.classList.add(this.css_class);
+
+        System.reflesh.mountPageClass(root);
 
         addListener(root);
 

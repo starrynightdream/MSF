@@ -4,6 +4,17 @@
 // todo 由设定导入页面的自定义信息
 import pageState from "../component/pageState.js";
 
+// Q: 如何在不同的页面获取对应的h5代码？
+// 监听一个全局的 PageName 属性，然后根据属性变化设置？
+// Q：进入页面的过程是不属于各类状态的。合理么?
+// 应该无所谓
+// Q：如果需要不停移动页面，如何减少页面渲染的次数？（保存结果，无需多次渲染重复的办法)
+// 由组件内部解决
+// Q：你的CDATA函数是干嘛用的？
+// 专门用于处理动态数据的变化。页面相对固定的结构信息则由内部执行
+// A：就是说，页面的变化由两部分进行，其一是让系统接管class的变化，其二是观察者模式的对页面信息的响应
+// Q：监听后修改页面在内部进行，是否需要外部函数？
+
 const TransitionDefaultTime = 500;
 
 // 全局函数
@@ -79,17 +90,13 @@ const _pageChange = {
         root.removeEventListener(e_type, callback);
     },
     bindEve (root, e_type, callback, keys, catech = false) {
-        let coverf = (e) =>{
-            // i can add some eff there
-            callback(e); 
-        }
 
         let callf = (values) =>{
 
             if (values) {
-                root.addEventListener(e_type, coverf, catech);
+                root.addEventListener(e_type, callback, catech);
             } else {
-                root.removeEventListener(e_type, coverf, catech)
+                root.removeEventListener(e_type, callback, catech);
             }
         }
 
@@ -152,14 +159,17 @@ const _pageChange = {
         for(let key of Object.keys(_o)) {
             this.setVal(key, _o[key])
         }
+
+        this.setVal('pageName', pname);
     },
-    _coverO : {},
-    _nodeArr : [],
-    _fArr : {},
-    _conterol : {},
+    _coverO : {}, // save data
+    _nodeArr : [], // the node receive css class
+    _fArr : {}, // the cdata callback block
+    _conterol : {}, // the component sign in system
+    _eventCallBack: [], // the callback of bind event.(which system control to add and remove)
     _bindAKey(key, f, keys) {
 
-        if (!this._coverO[key]) {
+        if (!this._fArr[key]) {
             this._coverO[key] = undefined;
             this._fArr[key] = [];
         }
@@ -187,17 +197,20 @@ const _pageChange = {
     _setValSilent(keys, vals) {
         if (typeof keys == 'string') {
             this._coverO[keys] = vals;
+            if (!this._fArr[keys]) this._fArr[keys] = [];
         } else if (typeof keys == 'object') {
 
             if (Array.isArray(keys)) {
 
                 for (let idx of keys) {
                     this._coverO[keys[idx]] = vals[idx];
+                    if(!this._fArr[keys[idx]]) this._fArr[keys[idx]] =[];
                 }
             } else {
 
                 for (let key of Object.keys(keys)) {
                     this._coverO[key] = keys[key];
+                    if(!this._fArr[key]) this._fArr[key] =[];
                 }
             }
         }
