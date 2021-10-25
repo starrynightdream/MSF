@@ -32,6 +32,13 @@ function item(data, idx, arr) {
     return _item;
 }
 
+function addListener(root) {
+    System.reflesh.bindEve(root, 'click', (e) =>{
+        alert('at home')
+        System.reflesh.toPage('setting')
+    }, 'home')
+}
+
 export default {
     defaultComponentName: 'settingPage',
     css: [],
@@ -41,6 +48,8 @@ export default {
         let {_r, _render_root} = formPage(data);
         root.appendChild(_r);
         root.classList.add(this.css_class);
+
+        addListener(root)
 
         return {
             _name: name? name: this.defaultComponentName,

@@ -41,6 +41,8 @@ export default {
         root.appendChild(_r);
         root.classList.add(this.css_class);
 
+        System.reflesh.mountPageClass(root)
+
         return {
             _name: name? name: this.defaultComponentName,
             _cRoot: _render_root,

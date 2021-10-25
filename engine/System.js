@@ -4,6 +4,8 @@
 // todo 由设定导入页面的自定义信息
 import pageState from "../component/pageState.js";
 
+const TransitionDefaultTime = 500;
+
 // 全局函数
 const G = {};
 
@@ -18,7 +20,7 @@ const _pageChange = {
     getVal(keys, f) {
 
         if (typeof keys == 'string') {
-            this._bindAKey(keys, f);
+            this._bindAKey(keys, f, keys);
         } else if (typeof keys == 'object') {
 
             keys.forEach(key => {
@@ -36,7 +38,7 @@ const _pageChange = {
         this._setValSilent(keys, value);
 
         if (typeof keys == 'string') {
-            this._cValCallBack(this._fArr[key]);
+            this._cValCallBack(this._fArr[keys]);
         } else if (typeof keys == 'object') {
             let _tempset = new Set();
             if (Array.isArray(keys)) {
@@ -74,8 +76,24 @@ const _pageChange = {
         root.addEventListener(e_type, callback);
     },
     removeEve (root,e_type, callback) {
-        // bug: this func is temp, can't remove
         root.removeEventListener(e_type, callback);
+    },
+    bindEve (root, e_type, callback, keys, catech = false) {
+        let coverf = (e) =>{
+            // i can add some eff there
+            callback(e); 
+        }
+
+        let callf = (values) =>{
+
+            if (values) {
+                root.addEventListener(e_type, coverf, catech);
+            } else {
+                root.removeEventListener(e_type, coverf, catech)
+            }
+        }
+
+        this.getVal(keys, callf); // bind callback
     },
     toPage(pname) {
         let _isinner = false;
@@ -123,8 +141,10 @@ const _pageChange = {
             });
         }
 
+        // todo: make time settingable 
+        // and can skip the enter path
         setTimeout(() => {
-            enter(500);
+            enter(TransitionDefaultTime);
         }, 0);
 
         // global attr change
@@ -166,7 +186,7 @@ const _pageChange = {
     },
     _setValSilent(keys, vals) {
         if (typeof keys == 'string') {
-            this._coverO[kyes] = vals;
+            this._coverO[keys] = vals;
         } else if (typeof keys == 'object') {
 
             if (Array.isArray(keys)) {
@@ -186,9 +206,10 @@ const _pageChange = {
     },
     _cValCallBack(calls, avoid = new Set()) {
 
-        for (let _fo in calls) {
+        for (let _fo of calls) {
 
-            if (avoid.has(_fo)) {} else {
+            if (avoid.has(_fo)) {} 
+            else {
                 _fo._f(this._getValSilent(_fo._keys));
                 avoid.add(_fo);
             }

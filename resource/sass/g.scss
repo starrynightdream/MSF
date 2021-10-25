@@ -8,6 +8,7 @@ body {
 
     $halfWidth : 50vw;
     $pullSome : 2vw;
+    $SettingPathWitdh : 15vw;
 
     background-color: $colorFix;
 
@@ -27,6 +28,14 @@ body {
         flex-flow: column wrap; /* 上面两个属性的简写 */
         justify-content: center; /* 项目在主轴上的对齐方向 */
         align-items: left; /* 项目在副轴上的对齐方式 */
+        
+        &.enter {
+            top: 0vh;
+        }
+
+        &.keep {
+            top: 15vh;
+        }
     }
 
     .system_context_class,.system_setting_class {
@@ -39,8 +48,10 @@ body {
         width: 0vw;
 
         /* 记录自己一个失误，这里要有&才会变化成功，因为这里需要同级选择而非后代选择*/
-        &.enter {
-            width: 50vw;
+        &.homePage{
+            &.enter {
+                width: 50vw;
+            }
         }
     }
 
@@ -48,16 +59,29 @@ body {
 
         left: 0px;
         background-color: $colorHas;
-        &.keep {
-            width: 50vw;
+
+        &.homePage{
+            &.keep {
+                width: 50vw;
+            }
+
+            &:hover {
+                width: $halfWidth + $pullSome;
+            }
+
+            &.pull_left{
+                width: $halfWidth - $pullSome;
+            }
         }
 
-        &:hover {
-            width: $halfWidth + $pullSome;
-        }
+        &.settingPage {
+            &.enter {
+                width: $halfWidth;
+            }
 
-        &.pull_left{
-            width: $halfWidth - $pullSome;
+            &.keep {
+                width: $SettingPathWitdh;
+            }
         }
 
     }
@@ -66,10 +90,29 @@ body {
         right: 0px;
         background-color: $colorNone;
 
-        &.keep {
-            transition: none;
-            width: 100vw;
-            z-index: -1;
+        &.homePage{
+            &.keep{
+                transition: none;
+                width: 100vw;
+                z-index: -1;
+            }
         }
+
+        &.settingPage,.contextPage{
+            &.keep{
+                transition: none;
+                width: 100vw;
+                z-index: -1;
+            }
+        }
+
+        &.settingPage,.contextPage {
+            &.enter {
+                transition: none;
+                width: 100vw;
+                z-index: -1;
+            }
+        }
+
     }
 }

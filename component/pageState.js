@@ -5,10 +5,15 @@ export default {
     states: {
         'defaultHome': {
             class: 'homePage', // 为页面添加的类名
-            state: {} // 数值的变化
+            state: {
+                home: true,
+            } // 数值的变化
         },
         'setting': {
-
+            class: 'settingPage',
+            state: {
+                home: false,
+            }
         },
         'info': {
 
