@@ -16,6 +16,8 @@ import pageState from "../component/pageState.js";
 // Q：监听后修改页面在内部进行，是否需要外部函数？
 
 const TransitionDefaultTime = 500;
+const NameOfPageName = 'pageName';
+const UnMountClassName = 'unmount';
 
 // 全局函数
 const G = {};
@@ -70,6 +72,7 @@ const _pageChange = {
     mountPageClass(...nodes) {
 
         nodes.forEach(item => {
+            item.classList.add(UnMountClassName);
             this._nodeArr.push(item);
         });
     },
@@ -82,7 +85,6 @@ const _pageChange = {
     get conterols() {
         return this._conterol;
     },
-    // todo: make auto mount eve call and disable eve call
     addEve (root,e_type, callback) {
         root.addEventListener(e_type, callback);
     },
@@ -92,15 +94,27 @@ const _pageChange = {
     bindEve (root, e_type, callback, keys, catech = false) {
 
         let callf = (values) =>{
+            let val = true;
+            if (typeof values == 'object') {
+                for (let key in Object.keys(values)) {
+                    val = val && values[key];
+                    if (!val) break;
+                }
+            } else {
+                val = values == true;
+            }
 
-            if (values) {
+            if (val) {
                 root.addEventListener(e_type, callback, catech);
             } else {
                 root.removeEventListener(e_type, callback, catech);
             }
         }
 
-        this.getVal(keys, callf); // bind callback
+        _pageChange.getVal(keys, callf); // bind callback
+    },
+    bindPage (callback){
+        _pageChange.getVal(NameOfPageName, callback);
     },
     toPage(pname) {
         let _isinner = false;
@@ -127,6 +141,7 @@ const _pageChange = {
         // global css class change
         this._nodeArr.forEach(node=> {
             node.classList.remove(_SYSG.pageClass);
+            node.classList.remove(UnMountClassName);
             node.classList.add(pageState.states[pname].class);
         });
         _SYSG.pageClass = pageState.states[pname].class;
@@ -160,7 +175,7 @@ const _pageChange = {
             this.setVal(key, _o[key])
         }
 
-        this.setVal('pageName', pname);
+        _pageChange.setVal(NameOfPageName, pname);
     },
     _coverO : {}, // save data
     _nodeArr : [], // the node receive css class

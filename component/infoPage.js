@@ -2,7 +2,7 @@
 // 介绍的小页面的内容获取
 import System from "../engine/System.js";
 
-function formPage(data) {
+function _formPage(data) {
     let _r = document.createElement('div');
     let _render_root  = document.createElement('div');
     let _items = data.infos.map(item);
@@ -31,19 +31,23 @@ function item(data, idx, arr) {
     return _item;
 }
 
+function _addListener(root) {
+    System.reflesh.addEve(root, 'click', ()=>{
+        System.reflesh.toPage('defaultHome')
+    })
+}
+
 export default {
     defaultComponentName: 'infoPage',
     css: [],
     js: [],
     css_class: ['system_info_class'], //这个css class会被加载在父节点上
     context(root, data, name) {
-        let {_r, _render_root} = formPage(data);
+        let {_r, _render_root} = _formPage(data);
         root.appendChild(_r);
         root.classList.add(this.css_class);
 
-        System.reflesh.mountPageClass(root)
-
-        return {
+        let controller = {
             _name: name? name: this.defaultComponentName,
             _cRoot: _render_root,
             _fatherNode: root,
@@ -55,5 +59,10 @@ export default {
                 });
             },
         }
+
+        _addListener(root)
+        System.reflesh.mountPageClass(root)
+
+        return controller;
     }
 }

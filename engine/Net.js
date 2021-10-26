@@ -11,5 +11,21 @@ export default{
     },
     info(){
         return System.G.version;
+    },
+    test(code) {
+        switch (code) {
+            case 'setting':
+                return [
+                    ['测试1', 'setting'],
+                    ['测试2', 'context'],
+                    ['测试3', 'info'],
+                    ['测试4', 'home'],
+                    ['测试5', 'null'],
+                ]
+                break;
+        
+            default:
+                break;
+        }
     }
 }

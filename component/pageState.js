@@ -16,10 +16,16 @@ export default {
             }
         },
         'info': {
-
+            class: 'infoPage',
+            state: {
+                home: false,
+            }
         },
         'context': {
-
+            class: 'contextPage',
+            state: {
+                home: false,
+            }
         }
     },
     get pages() {

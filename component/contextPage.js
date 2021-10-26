@@ -4,34 +4,88 @@
 import System from "../engine/System.js";
 import settingPage from "./settingPage.js";
 
-function formPage(data) {
-    let _r = document.createElement('div');
-    let _render_root  = document.createElement('div');
+function render(controller, data){
+    this._cRoot.innerHTML = ''
     let _items = data.infos.map(item);
-
-    System.reflesh.mountPageClass(..._items);
-
-    let _head = head(data);
-    _head?  _r.appendChild(_head): null;
-
     _items.forEach( (item) =>{
         _render_root.appendChild(item)
     });
-    _r.appendChild(_render_root);
+}
 
+function callPageChange(controller, pageName) {
+    switch (pageName) {
+    case 'home':
+        _onHomePage(controller);
+        break;
+    case 'setting':
+        _onSettingPage(controller);
+        break;
+    case 'info':
+        _onInfoPage(controller);
+        break
+    case 'context':
+        _onContextPage(controller);
+        break;
+    default:
+        break;
+    }
+}
+
+function _onHomePage (controller){
+    // 进行全节点的渲染
+    if (!controller.data.homeRender) {
+        // 表示已经渲染过
+        controller.data.homeRender = true;
+        controller.data.homeH5 = '';
+    } else {
+        // 使用重复数据
+    }
+    controller.data._cRoot.innerHTML = '';
+}
+
+function _onSettingPage (controller) {
+    if (!controller.data.settingRender) {
+        controller.data.settingRender = true;
+    }
+    controller.data._cRoot.innerHTML = '';
+
+    controller.data._cRoot.classList.add('buttonGroup');
+}
+
+function _onContextPage(controller){
+    // 进行全节点的渲染
+    if (!controller.data.homeRender) {
+        // 表示已经渲染过
+        controller.data.homeRender = true;
+        controller.data.homeH5 = '';
+    } else {
+        // 使用重复数据
+    }
+    controller.data._cRoot.innerHTML = '';
+}
+
+function _onInfoPage (controller){
+    // 进行全节点的渲染
+    if (!controller.data.homeRender) {
+        // 表示已经渲染过
+        controller.data.homeRender = true;
+        controller.data.homeH5 = '';
+    } else {
+        // 使用重复数据
+    }
+    controller.data._cRoot.innerHTML = '';
+}
+
+function _formPage(data) {
+    let _r = document.createElement('div');
+    let _render_root  = document.createElement('div');
+    _r.appendChild(_render_root);
     return {
         _r, _render_root
     }
 }
 
-function head(data) {
-    return null;
-}
-
-function item(data, idx, arr) {
-    let _item = document.createElement('li');
-    _item.innerHTML = `${idx}: ${data}`;
-    return _item;
+function _item(data, idx, arr) {
 }
 
 function mouseover(e) {
@@ -44,12 +98,18 @@ function mouseout (e) {
     conters[settingPage.defaultComponentName]._fatherNode.classList.remove('pull_left');
 }
 
+function click (e){
+    System.reflesh.toPage('context')
+}
+
 function addListener(root){
     // System.reflesh.addEve(root, 'mouseover', mouseover);
     // System.reflesh.addEve(root, 'mouseout', mouseout);
 
     System.reflesh.bindEve(root, 'mouseover', mouseover, 'home');
     System.reflesh.bindEve(root, 'mouseout', mouseout, 'home');
+    // todo: simply computed attr
+    System.reflesh.addEve(root, 'click', click);
 }
 
 // function removeListener(root) {
@@ -63,25 +123,24 @@ export default {
     js: [],
     css_class: ['system_context_class'], //这个css class会被加载在父节点上
     context(root, data, name) {
-        let {_r, _render_root} = formPage(data);
+        let {_r, _render_root} = _formPage(data);
         root.appendChild(_r);
         root.classList.add(this.css_class);
 
-        System.reflesh.mountPageClass(root);
-
-        addListener(root);
-
-        return {
+        let controller = {
             _name: name?name : this.defaultComponentName,
             _fatherNode: root,
-            _cRoot: _render_root,
-            cData (data) {
-                this._cRoot.innerHTML = ''
-                let _items = data.infos.map(item);
-                _items.forEach( (item) =>{
-                    _render_root.appendChild(item)
-                });
+            data: {
+                _cRoot: _render_root,
             },
-        }
+            cData (_data) {
+                render(this, _data);
+            },
+        };
+
+        System.reflesh.mountPageClass(root);
+        System.reflesh.bindPage(callPageChange);
+        addListener(root);
+        return controller;
     }
 }
