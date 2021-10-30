@@ -139,17 +139,22 @@ const _pageChange = {
 
         // change environment
         // global css class change
-        this._nodeArr.forEach(node=> {
-            node.classList.remove(_SYSG.pageClass);
-            node.classList.remove(UnMountClassName);
-            node.classList.add(pageState.states[pname].class);
-        });
-        _SYSG.pageClass = pageState.states[pname].class;
+        if (_SYSG.pageClass == pageState.states[pname].class){
+        }
+        else{
+            this._nodeArr.forEach(node=> {
+                node.classList.add(pageState.states[pname].class);
+                // node.classList.remove(UnMountClassName);
+                node.classList.remove(_SYSG.pageClass);
+            });
+            _SYSG.pageClass = pageState.states[pname].class;
+
+        }
 
         let enter = (time)=> {
             this._nodeArr.forEach( node =>{
-                node.classList.remove('keep');
                 node.classList.add('enter');
+                node.classList.remove('keep');
             });
             setTimeout(() => {
                 keep();
@@ -158,8 +163,8 @@ const _pageChange = {
 
         let keep = () =>{
             this._nodeArr.forEach( node =>{
-                node.classList.remove('enter');
                 node.classList.add('keep');
+                node.classList.remove('enter');
             });
         }
 

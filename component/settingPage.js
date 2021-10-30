@@ -8,10 +8,10 @@ import Net from "../engine/Net.js";
 // get active child node by data
 function render(control, data){
     this._cRoot.innerHTML = '';
-    let _items = data.infos.map(item);
-    _items.forEach( (item) =>{
-        _render_root.appendChild(item)
-    });
+    // let _items = data.infos.map(item);
+    // _items.forEach( (item) =>{
+    //     _render_root.appendChild(item)
+    // });
 }
 
 function callPageChange(controller, pageName) {

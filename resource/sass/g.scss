@@ -17,7 +17,7 @@ body {
         transition: all .5s ease;
         z-index: 1;
         position: absolute;
-        top: 10vh;
+        top: -10vh;
         width: 20vw;
         left: 40vw;
 
@@ -31,10 +31,9 @@ body {
         align-items: left; /* 项目在副轴上的对齐方式 */
         
         &.homePage {
-            &.enter {
-                top: 0vh;
+            &.enter{
+                top: 25vh;
             }
-
             &.keep {
                 top: 15vh;
             }
@@ -56,7 +55,7 @@ body {
     }
 
     .system_context_class,.system_setting_class {
-        transition: width .5s ease;
+        transition: width .5s ease 1s;
 
         position: absolute;
         top: 0px;
@@ -68,24 +67,23 @@ body {
     }
 
     .system_setting_class {
-
         left: 0px;
         background-color: $colorHas;
 
         &.homePage{
+            width: $halfWidth;
             &.enter {
                 width: $halfWidth;
             }
             &.keep {
                 width: $halfWidth;
-            }
+                &:hover {
+                    width: $halfWidth + $pullSome;
+                }
 
-            &:hover {
-                width: $halfWidth + $pullSome;
-            }
-
-            &.pull_left{
-                width: $halfWidth - $pullSome;
+                &.pull_left{
+                    width: $halfWidth - $pullSome;
+                }
             }
         }
 
