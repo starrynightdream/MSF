@@ -55,7 +55,6 @@ body {
     }
 
     .system_context_class,.system_setting_class {
-        transition: width .5s ease;
 
         position: absolute;
         top: 0px;
@@ -67,16 +66,18 @@ body {
     }
 
     .system_setting_class {
+        transition: width .5s ease;
         left: 0px;
         background-color: $colorHas;
 
         &.homePage{
-            width: $halfWidth;
             &.enter {
-                width: $halfWidth;
+                width: 0vw;
             }
             &.keep {
                 width: $halfWidth;
+            }
+            &.finish {
                 &:hover {
                     width: $halfWidth + $pullSome;
                 }
@@ -104,6 +105,11 @@ body {
 
             &.keep {
                 width: $SettingPathWitdhWhenContext;
+                transition: background-color 1s ease;
+                transition: width .5s ease;
+                &:hover {
+                    background-color: aqua;
+                }
             }
         }
 
@@ -112,15 +118,22 @@ body {
     .system_context_class {
         right: 0px;
         background-color: $colorNone;
+        transition: width 0.5s ease;
+        z-index: -1;
 
         &.homePage{
+            &.ready {
+                width: 0vw;
+            }
             &.enter{
-                width: $halfWidth;
+                width: 0vw;
             }
             &.keep{
+                width: $halfWidth;
+            }
+            &.finish {
                 transition: none;
                 width: 100vw;
-                z-index: -1;
             }
         }
 

@@ -144,21 +144,32 @@ const _pageChange = {
         else{
             this._nodeArr.forEach(node=> {
                 node.classList.add(pageState.states[pname].class);
-                // node.classList.remove(UnMountClassName);
+                node.classList.remove(UnMountClassName);
                 node.classList.remove(_SYSG.pageClass);
             });
             _SYSG.pageClass = pageState.states[pname].class;
 
         }
 
-        let enter = (time)=> {
+        let ready = () => {
+            this._nodeArr.forEach( node =>{
+                node.classList.add('ready');
+                node.classList.remove('finish');
+            });
+            setTimeout(() => {
+                enter();
+            }, 0);
+        }
+
+        let enter = ()=> {
             this._nodeArr.forEach( node =>{
                 node.classList.add('enter');
                 node.classList.remove('keep');
+                node.classList.remove('ready');
             });
             setTimeout(() => {
                 keep();
-            }, time);
+            }, 0);
         }
 
         let keep = () =>{
@@ -166,12 +177,23 @@ const _pageChange = {
                 node.classList.add('keep');
                 node.classList.remove('enter');
             });
+
+            setTimeout(() => {
+                finish();
+            }, TransitionDefaultTime);
+        }
+
+        let finish = () =>{
+            this._nodeArr.forEach( node =>{
+                node.classList.add('finish');
+            });
         }
 
         // todo: make time settingable 
         // and can skip the enter path
         setTimeout(() => {
-            enter(TransitionDefaultTime);
+            // ready(TransitionDefaultTime);
+            ready()
         }, 0);
 
         // global attr change

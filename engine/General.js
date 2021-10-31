@@ -47,6 +47,7 @@ export default {
         }, 1000);
 
         System.reflesh.toPage(pageState.pages[0]);
+
         // setTimeout(() => {
         //     this.trick()
         // }, 0);
