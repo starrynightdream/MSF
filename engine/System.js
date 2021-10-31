@@ -19,9 +19,9 @@ const TransitionDefaultTime = 500;
 const NameOfPageName = 'pageName';
 const UnMountClassName = 'unmount';
 
-// 全局函数
+// 全局数据
 const G = {};
-
+// 系统全局数据
 const _SYSG = {
     version: "1.0",
 }
@@ -75,12 +75,14 @@ const _pageChange = {
             item.classList.add(UnMountClassName);
             this._nodeArr.push(item);
         });
+        return this;
     },
     registerConterol (...conterols) {
 
         for (let con of conterols) {
             this._conterol[con._name] = con;
         }
+        return this;
     },
     get conterols() {
         return this._conterol;
@@ -91,17 +93,22 @@ const _pageChange = {
     removeEve (root,e_type, callback) {
         root.removeEventListener(e_type, callback);
     },
-    bindEve (root, e_type, callback, keys, catech = false) {
+    bindEve (root, e_type, callback, keys, catech = false, computed = null) {
 
         let callf = (values) =>{
             let val = true;
-            if (typeof values == 'object') {
-                for (let key in Object.keys(values)) {
-                    val = val && values[key];
-                    if (!val) break;
-                }
+            if (computed) {
+                val = computed(values);
             } else {
-                val = values == true;
+
+                if (typeof values == 'object') {
+                    for (let key in Object.keys(values)) {
+                        val = val && values[key];
+                        if (!val) break;
+                    }
+                } else {
+                    val = values == true;
+                }
             }
 
             if (val) {
@@ -115,6 +122,15 @@ const _pageChange = {
     },
     bindPage (callback){
         _pageChange.getVal(NameOfPageName, callback);
+        return this;
+    },
+    // todo: make it just computed once
+    computedAttr (keys, computed, callback){
+
+        this.getVal(keys, (vals) =>{
+            callback( computed(vals));
+        });
+        return this;
     },
     toPage(pname) {
         let _isinner = false;
@@ -151,6 +167,7 @@ const _pageChange = {
 
         }
 
+        // func list of stat change
         let ready = () => {
             this._nodeArr.forEach( node =>{
                 node.classList.add('ready');
@@ -204,9 +221,9 @@ const _pageChange = {
 
         _pageChange.setVal(NameOfPageName, pname);
     },
-    _coverO : {}, // save data
+    _coverO : {}, // save data obj
     _nodeArr : [], // the node receive css class
-    _fArr : {}, // the cdata callback block
+    _fArr : {}, // the callback block when data change
     _conterol : {}, // the component sign in system
     _eventCallBack: [], // the callback of bind event.(which system control to add and remove)
     _bindAKey(key, f, keys) {
