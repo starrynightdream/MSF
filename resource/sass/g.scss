@@ -37,6 +37,10 @@ body {
             &.keep {
                 top: 15vh;
             }
+            &.finish:hover{
+                width:30vw;
+                left: 35vw;
+            }
         }
 
         &.settingPage {
@@ -88,6 +92,10 @@ body {
             }
         }
 
+        &.infoPage{
+            width: $halfWidth;
+        }
+
         &.settingPage {
             &.enter {
                 width: $halfWidth;
@@ -105,11 +113,7 @@ body {
 
             &.keep {
                 width: $SettingPathWitdhWhenContext;
-                transition: background-color 1s ease;
                 transition: width .5s ease;
-                &:hover {
-                    background-color: aqua;
-                }
             }
         }
 
@@ -135,6 +139,11 @@ body {
                 transition: none;
                 width: 100vw;
             }
+        }
+
+        &.infoPage{
+            transition: none;
+            width: 100vw;
         }
 
         &.settingPage{

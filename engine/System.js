@@ -133,13 +133,7 @@ const _pageChange = {
         return this;
     },
     toPage(pname) {
-        let _isinner = false;
-        for (let _n in pageState.pages) {
-            if (pname == _n) {
-                _isinner = true;
-                break;
-            }
-        }
+        let _isinner = pname in pageState.pages;
 
         if (_isinner) {
             throw "目标页面不存在"
@@ -156,6 +150,7 @@ const _pageChange = {
         // change environment
         // global css class change
         if (_SYSG.pageClass == pageState.states[pname].class){
+            ; // skip same
         }
         else{
             this._nodeArr.forEach(node=> {
@@ -207,7 +202,6 @@ const _pageChange = {
         }
 
         // todo: make time settingable 
-        // and can skip the enter path
         setTimeout(() => {
             // ready(TransitionDefaultTime);
             ready()
@@ -311,4 +305,5 @@ export default {
     G,
     reflesh: _pageChange,
     _SYSG,
+    pageName: NameOfPageName
 }

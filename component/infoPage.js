@@ -32,9 +32,21 @@ function item(data, idx, arr) {
 }
 
 function _addListener(root) {
-    System.reflesh.addEve(root, 'click', ()=>{
-        System.reflesh.toPage('defaultHome')
-    })
+    // System.reflesh.addEve(root, 'click', ()=>{
+    //     System.reflesh.toPage('defaultHome')
+    // })
+
+    System.reflesh.bindEve(root, 'click', () =>{
+        System.reflesh.toPage('info');
+    }, System.pageName, false, (val) =>{
+        return val == 'defaultHome'
+    });
+
+    System.reflesh.bindEve(root, 'click', () =>{
+        System.reflesh.toPage('defaultHome');
+    }, System.pageName, false, (val) =>{
+        return val != 'defaultHome'
+    });
 }
 
 export default {

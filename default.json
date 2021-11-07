@@ -1,0 +1,10 @@
+{
+    "grobalCSS": "g.css",
+    "root": "../component",
+    "pageState": "./pageState.js",
+    "component": [
+        "./contextPage.js",
+        "./infoPage.js",
+        "./settingPage.js"
+    ]
+}

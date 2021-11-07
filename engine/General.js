@@ -6,8 +6,11 @@ import settingPage from "../component/settingPage.js"
 import infoPage from "../component/infoPage.js"
 import contextPage from "../component/contextPage.js"
 
-import System from "./System.js";
 import pageState from "../component/pageState.js";
+
+import System from "./System.js";
+import SettingLoader from "./SettingLoader.js"
+import util from "./util.js";
 
 const SettingID = 'system_setting_page';
 const InfoID = 'system_info_page';
