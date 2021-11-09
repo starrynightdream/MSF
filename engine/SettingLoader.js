@@ -1,20 +1,24 @@
 // SettingLoader.js
 // 读取设置
-const PROJECT_JSON_PATH = '../project.json';
-const FromProjectToThis = '..';
+const PROJECT_JSON_PATH = './project.json';
+const ToProjectBase = '..';
 
-let request = new XMLHttpRequest();
-request.open('GET', PROJECT_JSON_PATH);
-request.responseType = 'json';
-request.send();
-let themeReq;
+function loadSetting (url = path.join(ToProjectBase, PROJECT_JSON_PATH)) {
+    let request = new XMLHttpRequest();
+    request.open('GET', PROJECT_JSON_PATH);
+    request.responseType = 'json';
+    request.send();
+    let themeReq;
 
-request.onload = function (){
-    let res = request.response;
+    request.onload = function (){
+        let res = request.response;
 
-    themeReq = new XMLHttpRequest();
-    themeReq.open('GET', res.theme);
+        themeReq = new XMLHttpRequest();
+        themeReq.open('GET', res.theme);
+    }
 }
+
+// todo: change the path to util.js
 
 const path = {
     CHAR_FORWORD_SLASH : 47,
@@ -29,8 +33,6 @@ const path = {
     },
     _isSlash(code) {
         return code === this.CHAR_FORWORD_SLASH || code === this.CHAR_BACKWORD_SLASH;
-    },
-    _controlChar (argu) {
     },
     _normalArgu (argu) {
         // start without '/' or '\'
@@ -56,18 +58,20 @@ const path = {
         na.replace('\\', '/'); // just '/'
 
         // computed special char
-        na.replace('./', ''); // unwork char
+        na = na.replace('./', ''); // unwork char
         while (true) {
             let _idx = na.indexOf('/../');
             if (_idx == -1){
                 break;
             } else {
                 let _lidx = na.lastIndexOf('/', _idx -1);
-                _lidx = _lidx ===-1? 0: _lidx;
-                // todo remove str from _lidx to _idx
+                if (_lidx === -1){
+                    break;
+                } else {
+                    na = na.split(0, _lidx) + na.split(_idx + 4);
+                }
             }
         }
-
         return na;
     },
     _finalNormal (path, upflag) {
@@ -92,7 +96,7 @@ const path = {
         let res = ''; // answer
         let lastSlash = -1;
         let upflag = 0; // number of cover ../
-        for (let idx of paths){
+        for (let idx in paths){
             let _npath = this._normalArgu(paths[idx]);
             // control char
             let _idx;
@@ -128,6 +132,8 @@ const path = {
         return this._finalNormal(res, upflag);
     }
 }
+
+console.log(path.join(ToProjectBase, PROJECT_JSON_PATH))
 
 export default{
     path
