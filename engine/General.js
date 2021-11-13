@@ -12,9 +12,9 @@ import System from "./System.js";
 import SettingLoader from "./SettingLoader.js"
 import util from "./util.js";
 
-const SettingID = 'system_setting_page';
-const InfoID = 'system_info_page';
-const ContextID = 'system_context_page';
+// const SettingID = 'system_setting_page';
+// const InfoID = 'system_info_page';
+// const ContextID = 'system_context_page';
 
 let settingD 
 let infoD 
@@ -26,9 +26,21 @@ let contextControl
 
 export default {
     createMain(){
-        settingD = document.getElementById(SettingID);
-        infoD = document.getElementById(InfoID);
-        contextD = document.getElementById(ContextID);
+        // todo: create watting page
+        let {project, theme} = SettingLoader.loadSetting();
+        console.log(project, theme)
+        // settingD = document.getElementById(SettingID);
+        // infoD = document.getElementById(InfoID);
+        // contextD = document.getElementById(ContextID);
+
+        // todo: make component load from setting
+        settingD = document.createElement('div')
+        infoD = document.createElement('div')
+        contextD = document.createElement('div')
+        document.body.appendChild(settingD)
+        document.body.appendChild(infoD)
+        document.body.appendChild(contextD)
+
         System.reflesh.mountPageClass(settingD, infoD, contextD);
 
         settingControl = settingPage.context(settingD, {

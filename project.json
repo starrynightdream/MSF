@@ -1,4 +1,4 @@
 {
-    "project": "defaultTestProject",
-    "theme": "./default.json"
+    "theme": "./default.json",
+    "project": "defaultTestProject"
 }
