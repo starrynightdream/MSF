@@ -29,7 +29,7 @@ const _SYSG = {
 // 总理页面变化的数据结构
 let _idx = 0;
 let _pageArr = [];
-const _pageChange = {
+const _pageChange= {
     getVal(keys, f) {
 
         if (typeof keys == 'string') {
@@ -153,7 +153,7 @@ const _pageChange = {
             ; // skip same
         }
         else{
-            this._nodeArr.forEach(node=> {
+            _pageChange._allControlNode(node=> {
                 node.classList.add(pageState.states[pname].class);
                 node.classList.remove(UnMountClassName);
                 node.classList.remove(_SYSG.pageClass);
@@ -164,7 +164,7 @@ const _pageChange = {
 
         // func list of stat change
         let ready = () => {
-            this._nodeArr.forEach( node =>{
+            _pageChange._allControlNode( node =>{
                 node.classList.add('ready');
                 node.classList.remove('finish');
             });
@@ -174,7 +174,7 @@ const _pageChange = {
         }
 
         let enter = ()=> {
-            this._nodeArr.forEach( node =>{
+            _pageChange._allControlNode( node =>{
                 node.classList.add('enter');
                 node.classList.remove('keep');
                 node.classList.remove('ready');
@@ -185,7 +185,7 @@ const _pageChange = {
         }
 
         let keep = () =>{
-            this._nodeArr.forEach( node =>{
+            _pageChange._allControlNode( node =>{
                 node.classList.add('keep');
                 node.classList.remove('enter');
             });
@@ -196,7 +196,7 @@ const _pageChange = {
         }
 
         let finish = () =>{
-            this._nodeArr.forEach( node =>{
+            _pageChange._allControlNode( node =>{
                 node.classList.add('finish');
             });
         }
@@ -282,6 +282,20 @@ const _pageChange = {
         }
         return avoid;
     },
+    _allControlNode(callback) {
+        let i = 0
+        let l = _pageChange._nodeArr.length;
+        for (;i<l; ++i) {
+
+            if (_pageChange._nodeArr[i]) {
+                callback(_pageChange._nodeArr[i]);
+            } else {
+                _pageChange._nodeArr.splice(i, 1);
+                --i, --l;
+            }
+        }
+        return this;
+    }
 }
 
 

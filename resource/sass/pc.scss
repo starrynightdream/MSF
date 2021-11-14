@@ -4,7 +4,8 @@
 }
 
 .system_setting_class .buttonGroup{
-    $settingItemWidth : 10;
+    $settingItemWidth : 10vw;
+    width: 50vw;
     display: flex;
     display: -webkit-flex;
     justify-content: center;
@@ -13,11 +14,19 @@
     align-items: center; /* 项目在副轴上的对齐方式 */
     background-color: aliceblue;
 
-    .item {
-        width: $settingItemWidth vw;
-        height: $settingItemWidth vw;
+    .item{
+        width: $settingItemWidth;
+        height: $settingItemWidth;
         padding: 0, 10px, 10px, 0;
         border-right: 5vw;
         background-color: red;
+        transition: width 0.5s ease;
+
+        &.keep {
+            width: $settingItemWidth * 2;
+        }
+        &.finish{
+            width: $settingItemWidth;
+        }
     }
 }

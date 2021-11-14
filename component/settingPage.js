@@ -52,11 +52,12 @@ function _onSettingPage (controller) {
     controller.data._cRoot.innerHTML = '';
 
     controller.data._cRoot.classList.add('buttonGroup');
-    let data = Net.test('setting');
-    let _items = data.map(_item);
+    let _data = Net.test('setting');
+    let _items = _data.map(_item);
     _items.forEach(item=>{
         controller.data._cRoot.appendChild(item);
     });
+    System.reflesh.mountPageClass(..._items);
 }
 
 function _onContextPage(controller){
@@ -111,8 +112,14 @@ function _addListener(root) {
     // System.reflesh.bindEve(root, 'click', (e) =>{
     //     System.reflesh.toPage('setting')
     // }, 'home')
-    System.reflesh.addEve(root, 'click', ()=>{
+    // System.reflesh.addEve(root, 'click', ()=>{
+    //     System.reflesh.toPage('setting');
+    // });
+    System.reflesh.bindEve(root, 'click', () =>{
         System.reflesh.toPage('setting');
+    }, System.pageName, false, (val) =>{
+        // return val !== 'setting';
+        return true;
     });
 }
 

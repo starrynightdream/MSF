@@ -109,7 +109,10 @@ function addListener(root){
     System.reflesh.bindEve(root, 'mouseover', mouseover, 'home');
     System.reflesh.bindEve(root, 'mouseout', mouseout, 'home');
     // todo: simply computed attr
-    System.reflesh.addEve(root, 'click', click);
+    // System.reflesh.addEve(root, 'click', click);
+    System.reflesh.bindEve(root, 'click', click, System.pageName, false, (val) =>{
+        return val !== 'context';
+    });
 }
 
 // function removeListener(root) {

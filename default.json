@@ -1,8 +1,9 @@
 {
-    "grobalCSS": "g.css",
-    "root": "../component",
+    "resource": "resource/",
+    "grobalCSS": "./css/g.css",
+    "componentRoot": "/component/",
     "pageState": "./pageState.js",
-    "component": [
+    "components": [
         "./contextPage.js",
         "./infoPage.js",
         "./settingPage.js"
