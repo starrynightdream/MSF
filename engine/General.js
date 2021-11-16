@@ -11,28 +11,7 @@ import pageState from "/component/pageState.js";
 import System from "./System.js";
 import SettingLoader from "./SettingLoader.js"
 import util from "./util.js";
-
-const resourcePath = 'resource/';
-function _loadCss(href, resPath = resourcePath) {
-    let gcss = document.createElement('link');
-    gcss.rel = 'stylesheet';
-    gcss.type = 'text/css';
-    gcss.href = util.path.join(resPath, '/', href);
-    document.head.appendChild(gcss);
-}
-
-async function _loadComponent(src) {
-    let block = document.createElement('div');
-    document.body.appendChild(block);
-    System.reflesh.mountPageClass(block);
-    let _component =  await import(src);
-    console.log(_component)
-    let _controler = _component.default.context(block, {
-        infos: []
-    });
-    System.reflesh.registerConterol(_controler);
-    return this;
-}
+import Net from "./Net.js";
 
 async function _initProject(project) {
     // todo: change like project name to title
@@ -44,16 +23,18 @@ async function _loadTheme(theme) {
     if (Array.isArray(theme.grobalCSS)) {
         // each
         for (let item of theme.grobalCSS) {
-            _loadCss(item, theme.resource);
+            let _path =  util.path.join(theme.resource, item);
+            await Net.loadCss(_path);
         }
     // <link rel="stylesheet" href="resource/css/g.css"></link>
     } else {
-        _loadCss(theme.grobalCSS, theme.resource);
+        let _path = util.path.join(theme.resource, theme.grobalCSS)
+        await  Net.loadCss(_path);
     }
 
     for (let _com of theme.components) {
-        // err: init err or to page err
-        await _loadComponent( util.path.join('/', theme.componentRoot, _com));
+        let _src =  util.path.join('/', theme.componentRoot, _com);
+        await Net.loadComponent(_src);
     }
 }
 
@@ -61,9 +42,9 @@ async function _loadTheme(theme) {
 export default {
     async createMain(){
         // todo: create watting page
-        let {project, theme} = SettingLoader.loadSetting();
-        _initProject(project);
-        _loadTheme(theme);
+        let {project, theme} = await SettingLoader.loadSetting();
+        await _initProject(project);
+        await _loadTheme(theme);
 
         // todo: make component load from setting
 
