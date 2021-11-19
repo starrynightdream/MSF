@@ -75,7 +75,10 @@ body {
         background-color: $colorHas;
 
         &.homePage{
-            &.enter {
+            &.ready{
+                width: 0vw;
+            }
+            &.enter{
                 width: 0vw;
             }
             &.keep {

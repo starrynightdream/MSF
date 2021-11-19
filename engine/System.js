@@ -16,6 +16,7 @@ import pageState from "../component/pageState.js";
 // Q：监听后修改页面在内部进行，是否需要外部函数？
 
 const TransitionDefaultTime = 500;
+const PeerTime = 10;
 const NameOfPageName = 'pageName';
 const UnMountClassName = 'unmount';
 
@@ -181,7 +182,7 @@ const _pageChange= {
             });
             setTimeout(() => {
                 keep();
-            }, 0);
+            }, PeerTime); // 等待一小会
         }
 
         let keep = () =>{
@@ -319,5 +320,6 @@ export default {
     G,
     reflesh: _pageChange,
     _SYSG,
-    pageName: NameOfPageName
+    pageName: NameOfPageName,
+    DeftualTransformDurtion: PeerTime + TransitionDefaultTime
 }
