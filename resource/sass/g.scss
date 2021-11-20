@@ -2,9 +2,9 @@
 @import url('./phone.css') all and (max-width: 899px);
     
 body {
-    $colorHas : skyblue;
+    $colorHas : rgb(125, 248, 125);
     $colorNone : white;
-    $colorFix : gray;
+    $colorFix : rgb(218, 218, 0);
 
     $halfWidth : 50vw;
     $pullSome : 2vw;
@@ -18,8 +18,6 @@ body {
         z-index: 1;
         position: absolute;
         top: -10vh;
-        width: 20vw;
-        left: 40vw;
 
         background-color: $colorFix;
 
@@ -36,10 +34,6 @@ body {
             }
             &.keep {
                 top: 15vh;
-            }
-            &.finish:hover{
-                width:30vw;
-                left: 35vw;
             }
         }
 

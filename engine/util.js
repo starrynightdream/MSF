@@ -135,7 +135,7 @@ const path = {
             slashCount++;
             if (joined.length > 1 && path.allSlashCheck(joined.charCodeAt(1))) {
                 slashCount++;
-                if (joined.length > 2 && path.allSlashCheck(joined.charCodeAt(1))) {
+                if (joined.length > 2 && path.allSlashCheck(joined.charCodeAt(2))) {
                     slashCount++;
                 } else { // unc path like \\servername\path not change
                     needReplace = false;
@@ -159,14 +159,25 @@ const path = {
     }
 }
 
+const dom = {
+    markCss: function(node, classList) {
+        // just chrom now
+        node.classList.add(classList);
+    }, 
+    unMarkCss: function(node, classList) {
+        // just chrom now
+        node.classList.remove(classList);
+    }, 
+}
+
 export default {
-    path,
-    whenIsType(val, type, callback) {
+    path, dom,
+    whenIsType(val, type, callback, params = undefined) {
         switch (type) {
             case 'list':
             case 'array':
                 if (Array.isArray(val)) {
-                    callback();
+                    callback(params);
                     return true;
                 } else {
                     return false;
@@ -174,7 +185,7 @@ export default {
                 break;
             case 'obj':
                 if (!Array.isArray(val) && typeof val == 'object') {
-                    callback();
+                    callback(params);
                     return true;
                 } else {
                     return false;
@@ -182,7 +193,7 @@ export default {
                 break;
             default:
                 if (typeof val == type) {
-                    callback();
+                    callback(params);
                     return true;
                 } else {
                     return false;

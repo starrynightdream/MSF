@@ -8,7 +8,7 @@ function render(controller, data){
     this._cRoot.innerHTML = ''
     let _items = data.infos.map(item);
     _items.forEach( (item) =>{
-        _render_root.appendChild(item)
+        controller._render_root.appendChild(item)
     });
 }
 

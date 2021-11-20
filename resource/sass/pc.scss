@@ -1,6 +1,35 @@
 
 .system_info_class {
     height: 50vh;
+    width: 20vw;
+    left: 40vw;
+
+    .staticContain {
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+        flex-flow: row wrap; /* 上面两个属性的简写 */
+        justify-content: center; /* 项目在主轴上的对齐方向 */
+        align-items: center; /* 项目在副轴上的对齐方式 */
+
+        .staticImg {
+            transition: all .5s ease;
+            width: 20vw;
+            border-radius: 20%;
+            transform: translateY(-2vw);
+        }
+    }
+
+    &.infoPage {
+        width: 50vw;
+        left: 25vw;
+        top: 15vh;
+        height: 70vh;
+        .staticContain .staticImg {
+            width: 12vw;
+            transform: translateY(-14vw);
+        }
+    }
 }
 
 .system_setting_class .buttonGroup{
