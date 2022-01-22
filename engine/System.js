@@ -113,7 +113,7 @@ const _pageChange= {
             }
 
             if (val) {
-                root.addEventListener(e_type, callback, catech);
+                root.addEventListener(e_type, calback, catech);
             } else {
                 root.removeEventListener(e_type, callback, catech);
             }
@@ -134,7 +134,7 @@ const _pageChange= {
         return this;
     },
     toPage(pname) {
-        let _isinner = pname in pageState.pages;
+        let _isinner = pname in pageState.pages;l
 
         if (_isinner) {
             throw "目标页面不存在"
