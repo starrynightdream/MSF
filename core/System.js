@@ -23,7 +23,7 @@ _SYS = {
             if (_INFO_COVER[key]._type == DATA_TYPE.STACK) {
                 // STACK
                 let _o = _INFO_COVER[key]
-                return _o._data[_o._idx]
+                return _o._idx != -1 ?_o._data[_o._idx] : undefined
             } else if (_INFO_COVER[key]._type == DATA_TYPE.MAP) {
                 // MAP
                 return _INFO_COVER[key]._data
@@ -174,6 +174,53 @@ _SYS = {
     },
     isExistKey = function(key) {
         return _INFO_COVER[key] !== undefined
+    },
+    popStack = function (key) {
+
+        if (typeof key == 'string') {
+
+            if (_INFO_COVER[key]._type == DATA_TYPE.STACK) {
+                _INFO_COVER[key]._idx = Math.max(-1, _INFO_COVER[key]._idx - 1)
+            } else {
+                LOG(`不可以回退非栈存储的数据 key = ${key}`)
+            }
+        } else if (Array.isArray(key)) {
+            key.forEach(k =>{
+                popStack(k)
+            })
+        } else {
+            // other
+        }
+    },
+    emptyStack = function(key) {
+
+        if (typeof key == 'string') {
+
+            if (_INFO_COVER[key]._type == DATA_TYPE.STACK) {
+                return _INFO_COVER[key]._idx
+            } else {
+                LOG(`非栈存储 key = ${key}`)
+            }
+        } else if (Array.isArray(key)) {
+            return key.map(k =>{return emptyStack(k)})
+        } else {
+            // other
+        }
+    },
+    clearStack = function(key) {
+
+        if (typeof key == 'string') {
+
+            if (_INFO_COVER[key]._type == DATA_TYPE.STACK) {
+                _INFO_COVER[key]._idx = -1
+            } else {
+                LOG(`非栈存储 key = ${key}`)
+            }
+        } else if (Array.isArray(key)) {
+            return key.map(k =>{return emptyStack(k)})
+        } else {
+            // other
+        }
     },
     _blockCallBack = (fb) =>{
         fb._f( getv(fb._keys))
